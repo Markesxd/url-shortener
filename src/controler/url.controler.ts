@@ -1,5 +1,6 @@
 import {URL} from '../model/urls';
 import {nanoid} from 'nanoid';
+import NoContent from '../errors/nocontent';
 
 class Url {
 
@@ -21,6 +22,7 @@ class Url {
 
     async pick(code: string):Promise<string>{
         const url = await URL.find({code: code});
+        if(url.length === 0) throw new NoContent('Url não encontrada');
         return url[0].originUrl;
     }
 
